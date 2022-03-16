@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32126.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotNavigation", "RobotNavigation\RobotNavigation.csproj", "{1F55F11F-5D28-4B91-935E-A531527C6619}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F55F11F-5D28-4B91-935E-A531527C6619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F55F11F-5D28-4B91-935E-A531527C6619}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F55F11F-5D28-4B91-935E-A531527C6619}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F55F11F-5D28-4B91-935E-A531527C6619}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6EA2AC32-B49B-491F-801A-890093396CE0}
+	EndGlobalSection
+EndGlobal
