@@ -8,64 +8,37 @@ namespace RobotNavigation
 {
     public class robot
     {
-        private int[] _currentloc;
-        private grid _gridspace;
-        private agent _aiagent;
+        public int[] currentloc { get; set; }
+        public grid gridspace { get; set; }
+        public agent aiagent { get; set; }
         
-
-        private List<cell> _botpath;
 
         public robot(grid gridspace, int[] loc)
         {
-            _aiagent = new agent(loc[0], loc[1], gridspace);
+            this.gridspace = gridspace;
+            aiagent = new agent(loc[1], loc[0], gridspace);
             currentloc = loc;
-            _botpath = null;
         }
 
-        public void exitmaze(int selection)
+        public List<cell> exitmaze(int selection)
         {
-            int moves = 0;
             switch (selection)
             {
                 case 1:
-                    moves = _aiagent.bfsTreeTraversal();
-                    break;
+                    return aiagent.bfsTreeTraversal();
                 case 2:
-                    moves = _aiagent.dfsTreeTraversal();
-                    break;
+                    return aiagent.dfsTreeTraversal();
                 case 3:
-                    break;
+                    gridspace.makegridinformed();
+                    return aiagent.gbfsTreeTraversal();
+                case 4:
+                    gridspace.makegridinformed();
+                    return aiagent.aStarTreetraversal();
             }
-
-            if (moves > 0)
-            {
-                Console.WriteLine("Robot escaped maze in " + moves + " moves.");
-                Console.WriteLine("Robot completed maze at cell (" + _aiagent.currentcell.row + "," + _aiagent.currentcell.col + ").");
-            }
-            else
-                Console.WriteLine("Robot could not complete the puzzle.");
-            
+            return null;
         }
         
         
 
-        public grid gridspace
-        {
-            get { return _gridspace; }
-            set { _gridspace = value; }
-        }
-        public int[] currentloc
-        {
-            get { return _currentloc; }
-            set { _currentloc = value; }
-        }
-        public int totalmoves
-        {
-            get { return _botpath.Count; }
-        }
-        public List<cell> botpath
-        {
-            get { return _botpath; }
-        }
     }
 }

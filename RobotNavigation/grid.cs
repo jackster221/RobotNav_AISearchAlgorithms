@@ -9,15 +9,16 @@ namespace RobotNavigation
     
     public class grid
     {
-        private List<List<cell>> _area;
-        private int _rowsize;
-        private int _colsize;
+        public List<List<cell>> area { get; set; }
+        public int rowsize { get; }
+        public int colsize { get; }
+        public List<cell> goalcells { get; set; }
 
         public grid(int[] gridsize)
         {
-            _rowsize = gridsize[0];
-            _colsize = gridsize[1];
-
+            rowsize = gridsize[0];
+            colsize = gridsize[1];
+            goalcells = new List<cell>();
             area = new List<List<cell>>();
 
             for (int i = 0; i < rowsize; i++)
@@ -40,6 +41,7 @@ namespace RobotNavigation
             else
             {
                 area[gridloc[1]][gridloc[0]].isGoal = state;
+                goalcells.Add(area[gridloc[1]][gridloc[0]]);
             }
         }
 
@@ -54,18 +56,40 @@ namespace RobotNavigation
             }
         }
 
-        public List<List<cell>> area
+        //calculate distance from each cell to nearest endpoint
+        public void makegridinformed()
         {
-            get { return _area; }
-            set { _area = value; }
+            foreach(cell gcell in goalcells)
+            {
+                for(int i = 0; i < rowsize; i++)
+                {
+                    for(int j = 0; j < colsize; j++)
+                    {
+                        int currowsize = area[i][j].row;
+                        int curcolsize = area[i][j].col;
+
+                        if (currowsize > gcell.row)
+                            currowsize -= gcell.row;
+                        else
+                            currowsize = gcell.row - currowsize;
+
+                        if (curcolsize > gcell.col)
+                            curcolsize -= gcell.col;
+                        else
+                            curcolsize = gcell.col - curcolsize;
+
+                        int dist = currowsize + curcolsize;
+
+                        if (area[i][j].distanceToNearestGoal == -1)
+                            area[i][j].distanceToNearestGoal = dist;
+                        else if (area[i][j].distanceToNearestGoal > dist)
+                            area[i][j].distanceToNearestGoal = dist;
+
+                        //Console.WriteLine(area[i][j].distanceToNearestGoal);
+                    }
+                }
+            }
         }
-        public int rowsize
-        {
-            get { return _rowsize; }
-        }
-        public int colsize
-        {
-            get { return _colsize; }
-        }
+
     }
 }

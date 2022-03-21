@@ -8,44 +8,22 @@ namespace RobotNavigation
 {
     public class cell
     {
-        private bool _isObastacle;
-        private bool _isGoal;
-        private int _row;
-        private int _col;
-        private bool _visited;
+        public int row { get; }
+        public int col { get; }
+        public bool isObstacle { get; set; }
+        public bool isGoal { get; set; }
+        public bool Visited { get; set; }
+        public int distanceToNearestGoal { get; set; }
 
 
-        public cell(int row, int col)
+        public cell(int currow, int curcol)
         {
-            _row = row;
-            _col = col;
+            distanceToNearestGoal = -1;
+            row = currow;
+            col = curcol;
             isGoal = false;
             isObstacle = false;
         }
 
-        
-        public bool isGoal
-        {
-            get { return _isGoal; }
-            set { _isGoal = value; }
-        }
-        public bool isObstacle
-        {
-            get { return _isObastacle; }
-            set { _isObastacle = value; }
-        }
-        public int row
-        {
-            get { return _row; }
-        }
-        public int col
-        {
-            get { return _col; }
-        }
-        public bool visited
-        {
-            get { return _visited; }
-            set { _visited = value; }
-        }
     }
 }
