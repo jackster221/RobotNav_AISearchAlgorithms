@@ -56,7 +56,7 @@ namespace RobotNavigation
             }
         }
 
-        //calculate distance from each cell to nearest endpoint
+        //calculate manhattan distance from each cell to nearest endpoint 
         public void makegridinformed()
         {
             foreach(cell gcell in goalcells)
@@ -85,7 +85,6 @@ namespace RobotNavigation
                         else if (area[i][j].distanceToNearestGoal > dist)
                             area[i][j].distanceToNearestGoal = dist;
 
-                        //Console.WriteLine(area[i][j].distanceToNearestGoal);
                     }
                 }
             }

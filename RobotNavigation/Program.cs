@@ -41,17 +41,15 @@ namespace RobotNavigation
             List<cell> path = bot.exitmaze(result);
 
             if (path != null)
-            {
-                printgrid(gridspace, startLoc, path);
-                Console.WriteLine("Robot escaped maze in " + bot.aiagent.moveCount + " moves and searched " + (path.Count - 1) + " cells.");
-                Console.WriteLine("Robot completed maze at cell (" + path[path.Count - 1].row + "," + path[path.Count - 1].col + ").");
-            }
+                showresults(path, gridspace, startLoc);   
             else
                 Console.WriteLine("Robot could not complete the puzzle.");
         }
 
+  
         static void printgrid(grid gridspace, int[] startloc, List<cell> path = null)
         {
+
             Console.ForegroundColor = ConsoleColor.Black;
             for (int i = 0; i < gridspace.rowsize; i++)
             {
@@ -66,7 +64,7 @@ namespace RobotNavigation
                     else if (gridspace.area[i][j].isGoal)
                     {
                         Console.BackgroundColor = ConsoleColor.Green;
-                        Console.Write("F ");
+                        Console.Write("G ");
                     }                       
                     else if(gridspace.area[i][j].row == startloc[1] && gridspace.area[i][j].col == startloc[0])
                     {
@@ -79,7 +77,7 @@ namespace RobotNavigation
                         {
                             if (path.Contains(gridspace.area[i][j]))
                             {
-                                Console.BackgroundColor = ConsoleColor.Yellow;
+                               Console.BackgroundColor = ConsoleColor.Yellow;
                             }
                         }
                         else 
@@ -115,5 +113,52 @@ namespace RobotNavigation
 
           
         }
+
+        static void showresults(List<cell> path, grid gridspace, int[] startLoc)
+        {
+            cell curcell;
+            Stack<cell> exitorder = new Stack<cell>();
+            int count = 0;
+
+            //extract shortest path from list of all searched nodes and place in new list to determine directions the bot took
+            foreach (cell tempcell in path)
+            {
+                if (tempcell.isGoal)
+                {
+                    curcell = tempcell;
+                    Console.WriteLine("Path taken was:");
+                    while (curcell.parentCell != null)
+                    {
+                        exitorder.Push(curcell);
+                        curcell = curcell.parentCell;
+                        count++;
+                    }
+
+                    break;
+                }
+            }
+
+            curcell = gridspace.area[startLoc[1]][startLoc[0]];
+            while (exitorder.Count > 0)
+            {
+                cell next = exitorder.Pop();
+                if (next.row < curcell.row)
+                    Console.Write("Up," + " ");
+                else if (next.row > curcell.row)
+                    Console.Write("Down," + " ");
+                else if (next.col > curcell.col)
+                    Console.Write("Right," + " ");
+                else if (next.col < curcell.col)
+                    Console.Write("Left," + " ");
+
+                curcell = next;
+            }
+            Console.WriteLine();
+
+            printgrid(gridspace, startLoc, path);
+            Console.WriteLine("Robot escaped maze in " + count + " moves and searched " + (path.Count - 1) + " cells.");
+            Console.WriteLine("Robot completed maze at cell (" + path[path.Count - 1].row + "," + path[path.Count - 1].col + ").");
+        }
+
     }
 }

@@ -14,11 +14,27 @@ namespace RobotNavigation
         public bool isGoal { get; set; }
         public bool Visited { get; set; }
         public int distanceToNearestGoal { get; set; }
+        public int distanceTostart { get; set; }
+        public int totaldistance { get; set; }
+        public cell parentCell { get; set; }
 
 
         public cell(int currow, int curcol)
         {
             distanceToNearestGoal = -1;
+            distanceTostart = 0;
+            row = currow;
+            col = curcol;
+            isGoal = false;
+            isObstacle = false;
+        }
+
+        public cell(int currow, int curcol, cell prevcell)
+        {
+            this.parentCell = prevcell;
+            distanceToNearestGoal = -1;
+            distanceTostart = 0;
+            totaldistance = 0;
             row = currow;
             col = curcol;
             isGoal = false;

@@ -12,12 +12,23 @@ namespace RobotNavigation
         public grid gridspace { get; set; }
         public agent aiagent { get; set; }
         
+        
 
         public robot(grid gridspace, int[] loc)
         {
             this.gridspace = gridspace;
             aiagent = new agent(loc[1], loc[0], gridspace);
             currentloc = loc;
+        }
+
+        public void updateLoc()
+        {
+            currentloc = new int[] { aiagent.currentCell.row, aiagent.currentCell.col };
+        }
+
+        public cell getCurrentCell()
+        {
+            return gridspace.area[currentloc[0]][currentloc[1]];
         }
 
         public List<cell> exitmaze(int selection)
